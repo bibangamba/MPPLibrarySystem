@@ -13,7 +13,7 @@ import java.util.List;
 public class LibrarySystem extends JFrame implements LibWindow {
     public final static LibrarySystem INSTANCE = new LibrarySystem();
     private static LibWindow[] allWindows = {LibrarySystem.INSTANCE, LoginWindow.INSTANCE,
-            AllMemberIdsWindow.INSTANCE, AllBookIdsWindow.INSTANCE};
+            AllMemberIdsWindow.INSTANCE, AllBookIdsWindow.INSTANCE, AddMember.INSTANCE};
     ControllerInterface ci = new SystemController();
     JPanel mainPanel;
     JMenuBar menuBar;
@@ -147,6 +147,15 @@ public class LibrarySystem extends JFrame implements LibWindow {
             // todo: add book copy window
         });
         options.add(addBookCopy);
+        
+        JMenuItem addMember = new JMenuItem("Add Member");
+        addMember.addActionListener(e -> {
+            // add member window
+        	LibrarySystem.hideAllWindows();
+            AddMember.INSTANCE.init();
+            AddMember.INSTANCE.setVisible(true);
+        });
+        options.add(addMember);
     }
 
     private void librarianMenuItems() {

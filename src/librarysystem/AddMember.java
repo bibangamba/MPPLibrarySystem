@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import business.LibrarySystemException;
@@ -20,9 +21,21 @@ import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import java.util.UUID;
 
-public class AddMember {
+public class AddMember extends JFrame implements LibWindow{
+	public AddMember() {
+	}
+    public static final AddMember INSTANCE = new AddMember();
+    private boolean isInitialized = false;
+    public boolean isInitialized() {
+        return isInitialized;
+    }
 
-	private JFrame frame;
+    public void isInitialized(boolean val) {
+        isInitialized = val;
+    }
+
+   
+	private JPanel panel;
 	private JTextField txtFName;
 	private JTextField txtLname;
 	private JTextField txtStreet;
@@ -37,33 +50,27 @@ public class AddMember {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddMember window = new AddMember();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					AddMember window = new AddMember();
+//					window.panel.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.
 	 */
-	public AddMember() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 579, 511);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+@Override
+public void init() {
+		panel = new JPanel();
+		panel.setBounds(100, 100, 579, 511);
+	
 
 		JLabel lblfname = new JLabel("First Name");
 		lblfname.setBounds(76, 24, 138, 22);
@@ -71,69 +78,69 @@ public class AddMember {
 		txtFName = new JTextField();
 		txtFName.setBounds(273, 24, 273, 22);
 		txtFName.setColumns(10);
-		frame.getContentPane().setLayout(null);
-		frame.getContentPane().add(lblfname);
-		frame.getContentPane().add(txtFName);
+		panel.setLayout(null);
+		panel.add(lblfname);
+		panel.add(txtFName);
 
 		JLabel lblLname = new JLabel("Last Name");
 		lblLname.setBounds(76, 70, 138, 22);
-		frame.getContentPane().add(lblLname);
+		panel.add(lblLname);
 
 		txtLname = new JTextField();
 		txtLname.setBounds(273, 70, 273, 22);
 		txtLname.setColumns(10);
-		frame.getContentPane().add(txtLname);
+		panel.add(txtLname);
 
 		JLabel lblStreet = new JLabel("Street");
 		lblStreet.setBounds(76, 116, 138, 22);
-		frame.getContentPane().add(lblStreet);
+		panel.add(lblStreet);
 
 		txtStreet = new JTextField();
 		txtStreet.setBounds(273, 116, 273, 22);
 		txtStreet.setColumns(10);
-		frame.getContentPane().add(txtStreet);
+		panel.add(txtStreet);
 
 		JLabel lblCity = new JLabel("City");
 		lblCity.setBounds(76, 162, 138, 22);
-		frame.getContentPane().add(lblCity);
+		panel.add(lblCity);
 
 		txtCity = new JTextField();
 		txtCity.setBounds(273, 162, 273, 22);
 		txtCity.setColumns(10);
-		frame.getContentPane().add(txtCity);
+		panel.add(txtCity);
 
 		JLabel lblState = new JLabel("State");
 		lblState.setBounds(76, 208, 138, 22);
-		frame.getContentPane().add(lblState);
+		panel.add(lblState);
 
 		txtState = new JTextField();
 		txtState.setBounds(273, 208, 273, 22);
 		txtState.setColumns(10);
-		frame.getContentPane().add(txtState);
+		panel.add(txtState);
 
 		JLabel lblZip = new JLabel("Zip");
 		lblZip.setBounds(76, 254, 138, 22);
-		frame.getContentPane().add(lblZip);
+		panel.add(lblZip);
 
 		txtZip = new JTextField();
 		txtZip.setBounds(273, 254, 273, 22);
 		txtZip.setColumns(10);
-		frame.getContentPane().add(txtZip);
+		panel.add(txtZip);
 
 		JLabel lblTelNumber = new JLabel("Tel-Number");
 		lblTelNumber.setBounds(76, 300, 138, 22);
-		frame.getContentPane().add(lblTelNumber);
+		panel.add(lblTelNumber);
 
 		txtTelNum = new JTextField();
 		txtTelNum.setBounds(273, 300, 273, 22);
 		txtTelNum.setColumns(10);
-		frame.getContentPane().add(txtTelNum);
+		panel.add(txtTelNum);
 
 		txtIDNum = new JTextField();
 		txtIDNum.setBounds(273, 345, 273, 22);
 		txtIDNum.setEditable(false);
 		txtIDNum.setColumns(10);
-		frame.getContentPane().add(txtIDNum);
+		panel.add(txtIDNum);
 		btnAddMember.setBounds(131, 386, 273, 46);
 		btnAddMember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -166,11 +173,24 @@ public class AddMember {
 
 		btnAddMember.setForeground(Color.BLACK);
 		btnAddMember.setBackground(Color.CYAN);
-		frame.getContentPane().add(btnAddMember);
+		panel.add(btnAddMember);
 
 		lblMemberID = new JLabel("Member - Id");
 		lblMemberID.setBounds(76, 345, 107, 22);
-		frame.getContentPane().add(lblMemberID);
+		panel.add(lblMemberID);
+		
+		JButton backBtn = new JButton("Back");
+        backBtn.addActionListener(e -> {
+            LibrarySystem.hideAllWindows();
+            LibrarySystem.INSTANCE.setVisible(true);
+        });
+        backBtn.setBounds(0, 0, 75, 20);
+        panel.add(backBtn);
+		
+		 getContentPane().add(panel);
+	     isInitialized(true);
+	     setVisible(true);
+	     setSize(600, 500);
 	}
 
 	private static String generateRandomizedId() {
@@ -245,5 +265,12 @@ public class AddMember {
 		}
 
 		return true;
+		
 	}
+
+	
+
+	
+
+	
 }
