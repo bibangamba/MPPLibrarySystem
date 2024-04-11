@@ -26,6 +26,18 @@ public class SystemController implements ControllerInterface {
 		currentAuth = map.get(id).getAuthorization();
 		
 	}
+	
+	// add member
+	public void addMember(String memberId, String fname, String lname, String tel,String street, String city, String state, String zip) throws LibrarySystemException {
+		Address add = new Address(street, city,  state,  zip);
+		LibraryMember member = new LibraryMember(memberId, fname, lname, tel,add);
+		DataAccess da = new DataAccessFacade();
+		da.saveNewMember(member);
+	}
+	
+	
+	
+	//
 	@Override
 	public List<String> allMemberIds() {
 		DataAccess da = new DataAccessFacade();
