@@ -63,10 +63,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
         menuBar = new JMenuBar();
         menuBar.setBorder(BorderFactory.createRaisedBevelBorder());
 
-        if (SystemController.currentAuth == null) {
+        if (SystemController.getAuth() == null) {
             addLoggedOutMenuItems();
         } else {
-            switch (SystemController.currentAuth) {
+            switch (SystemController.getAuth()) {
                 case BOTH:
                     addSuperAdminMenuItems();
                     break;
@@ -125,8 +125,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 
         JMenuItem logout = new JMenuItem("Logout");
         logout.addActionListener(e -> {
-            // todo: logout
-            SystemController.currentAuth = null;
+            SystemController.logout();
             JOptionPane.showMessageDialog(this, "Logged out!");
             LibrarySystem.hideAllWindows();
             LibrarySystem.INSTANCE.init();
@@ -138,7 +137,11 @@ public class LibrarySystem extends JFrame implements LibWindow {
     private void adminMenuItems() {
         JMenuItem addBook = new JMenuItem("Add Book");
         addBook.addActionListener(e -> {
-            // todo: add book window
+            LibrarySystem.hideAllWindows();
+            BookWindow.INSTANCE.init();
+            Util.centerFrameOnDesktop(BookWindow.INSTANCE);
+            BookWindow.INSTANCE.setVisible(true);
+
         });
         options.add(addBook);
 
@@ -159,7 +162,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     }
 
     private void librarianMenuItems() {
-        JMenuItem checkoutBook = new JMenuItem("Checkout Book");
+        JMenuItem checkoutBook = new     JMenuItem("Checkout Book");
         checkoutBook.addActionListener(e -> {
             // todo: checkout book window
         });
@@ -187,7 +190,12 @@ public class LibrarySystem extends JFrame implements LibWindow {
         menuBar.add(options);
 
         login = new JMenuItem("Login");
-        login.addActionListener(new LoginListener());
+        login.addActionListener(e->{
+            LibrarySystem.hideAllWindows();
+            LoginWindow.INSTANCE.init();
+            Util.centerFrameOnDesktop(LoginWindow.INSTANCE);
+            LoginWindow.INSTANCE.setVisible(true);
+        });
         options.add(login);
 
     }
@@ -203,18 +211,6 @@ public class LibrarySystem extends JFrame implements LibWindow {
 
     }
 
-    class LoginListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            LibrarySystem.hideAllWindows();
-            LoginWindow.INSTANCE.init();
-            Util.centerFrameOnDesktop(LoginWindow.INSTANCE);
-            LoginWindow.INSTANCE.setVisible(true);
-
-        }
-
-    }
 
     class AllBookIdsListener implements ActionListener {
 
