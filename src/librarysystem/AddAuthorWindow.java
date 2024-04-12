@@ -1,77 +1,80 @@
 package librarysystem;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import business.LibrarySystemException;
 import business.SystemController;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JRadioButton;
-import java.util.UUID;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
-public class AddMember extends JFrame implements LibWindow{
-	public AddMember() {
-	}
-    public static final AddMember INSTANCE = new AddMember();
-    private boolean isInitialized = false;
-    public boolean isInitialized() {
-        return isInitialized;
-    }
+public class AddAuthorWindow extends JFrame implements LibWindow {
+	  public static final AddAuthorWindow INSTANCE = new AddAuthorWindow();
+	  JPanel panel;
+	    private boolean isInitialized = false;
+	    public boolean isInitialized() {
+	        return isInitialized;
+	    }
 
-    public void isInitialized(boolean val) {
-        isInitialized = val;
-    }
+	    public void isInitialized(boolean val) {
+	        isInitialized = val;
+	    }
+	    private AddAuthorWindow() {
+//	    	init();
+	    	
+	    }
+	    private JTextField txtFName;
+		private JTextField txtLname;
+		private JTextField txtStreet;
+		private JTextField txtCity;
+		private JTextField txtState;
+		private JTextField txtZip;
+		private JTextField txtTelNum;
+		private final JButton btnAddAuthor = new JButton("Add Author");
+		private JLabel lblBio;
+		private JTextArea txtBio;
 
-   
-	private JPanel panel;
-	private JTextField txtFName;
-	private JTextField txtLname;
-	private JTextField txtStreet;
-	private JTextField txtCity;
-	private JTextField txtState;
-	private JTextField txtZip;
-	private JTextField txtTelNum;
-	private JTextField txtIDNum;
-	private final JButton btnAddMember = new JButton("Add Member");
-	private JLabel lblMemberID;
 
 	/**
 	 * Launch the application.
 	 */
 //	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					AddMember window = new AddMember();
-//					window.panel.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
+////		EventQueue.invokeLater(new Runnable() {
+////			public void run() {
+////				try {
+//					AddAuthorWindow window = new AddAuthorWindow();
+////					window.frame.setVisible(true);
+////				} catch (Exception e) {
+////					e.printStackTrace();
+////				}
+////			}
+////		});
 //	}
 
 	/**
 	 * Create the application.
 	 */
-@Override
-public void init() {
-		panel = new JPanel();
-		panel.setBounds(100, 100, 579, 511);
-	
 
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	public void init() {
+getContentPane().setLayout(null);
+		
+		panel = new JPanel();
+		panel.setBounds(10, 11, 593, 598);
+		getContentPane().add(panel);
 		JLabel lblfname = new JLabel("First Name");
 		lblfname.setBounds(76, 24, 138, 22);
 
@@ -135,26 +138,20 @@ public void init() {
 		txtTelNum.setBounds(273, 300, 273, 22);
 		txtTelNum.setColumns(10);
 		panel.add(txtTelNum);
-
-		txtIDNum = new JTextField();
-		txtIDNum.setBounds(273, 345, 273, 22);
-		txtIDNum.setEditable(false);
-		txtIDNum.setColumns(10);
-		panel.add(txtIDNum);
-		btnAddMember.setBounds(131, 386, 273, 46);
-		btnAddMember.addActionListener(new ActionListener() {
+		btnAddAuthor.setBounds(144, 528, 273, 46);
+		btnAddAuthor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (validateForm()) {
 //				if(true) {
-					String memberID = Util.generateRandomizedId();
-					txtIDNum.setText(memberID);
+					
+				
 					SystemController cont = new SystemController();
 					try {
-						cont.addMember(memberID, txtFName.getText(), txtLname.getText(), txtTelNum.getText(),
-								txtStreet.getText(), txtCity.getText(), txtState.getText(), txtZip.getText());
+						cont.addAuthor(txtFName.getText(), txtLname.getText(), txtTelNum.getText(),
+								txtStreet.getText(), txtCity.getText(), txtState.getText(), txtZip.getText(),txtBio.getText());
 
-						JOptionPane.showMessageDialog(btnAddMember, txtFName.getText() + "'s ID is:" + memberID,
-								"Member added successfully", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(btnAddAuthor, "Author added successfully",
+								"Success", JOptionPane.INFORMATION_MESSAGE);
 						txtFName.setText("");
 						txtLname.setText("");
 						txtStreet.setText("");
@@ -162,7 +159,7 @@ public void init() {
 						txtState.setText("");
 						txtZip.setText("");
 						txtTelNum.setText("");
-						txtIDNum.setText("");
+						txtBio.setText("");
 					} catch (LibrarySystemException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -171,13 +168,13 @@ public void init() {
 			}
 		});
 
-		btnAddMember.setForeground(Color.BLACK);
-		btnAddMember.setBackground(Color.CYAN);
-		panel.add(btnAddMember);
+		btnAddAuthor.setForeground(Color.BLACK);
+		btnAddAuthor.setBackground(Color.CYAN);
+		panel.add(btnAddAuthor);
 
-		lblMemberID = new JLabel("Member - Id");
-		lblMemberID.setBounds(76, 345, 107, 22);
-		panel.add(lblMemberID);
+		lblBio = new JLabel("Bio");
+		lblBio.setBounds(76, 345, 107, 22);
+		panel.add(lblBio);
 		
 		JButton backBtn = new JButton("Back");
         backBtn.addActionListener(e -> {
@@ -188,13 +185,17 @@ public void init() {
         panel.add(backBtn);
 		
 		 getContentPane().add(panel);
+		 
+		 JScrollPane scrollPane = new JScrollPane();
+		 scrollPane.setBounds(273, 344, 273, 134);
+		 panel.add(scrollPane);
+		 
+		 txtBio = new JTextArea();
+		 scrollPane.setViewportView(txtBio);
 	     isInitialized(true);
 	     setVisible(true);
-	     setSize(600, 500);
+	     setSize(629, 659);
 	}
-
-
-
 	private boolean validateForm() {
 		String fname = txtFName.getText();
 		String lname = txtLname.getText();
@@ -206,55 +207,55 @@ public void init() {
 
 		if (fname.isEmpty()) {
 
-			JOptionPane.showMessageDialog(btnAddMember, "Please enter first name.", "Error",
+			JOptionPane.showMessageDialog(btnAddAuthor, "Please enter first name.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 
 		if (lname.isEmpty()) {
-			JOptionPane.showMessageDialog(btnAddMember, "Please enter last name.", "Error",
+			JOptionPane.showMessageDialog(btnAddAuthor, "Please enter last name.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (street.isEmpty()) {
-			JOptionPane.showMessageDialog(btnAddMember, "Please enter Street", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(btnAddAuthor, "Please enter Street", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (city.isEmpty()) {
-			JOptionPane.showMessageDialog(btnAddMember, "Please enter city.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(btnAddAuthor, "Please enter city.", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (state.isEmpty()) {
-			JOptionPane.showMessageDialog(btnAddMember, "Please enter state.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(btnAddAuthor, "Please enter state.", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (zip.isEmpty()) {
-			JOptionPane.showMessageDialog(btnAddMember, "Please enter zip.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(btnAddAuthor, "Please enter zip.", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (zip.length() != 5) {
-			JOptionPane.showMessageDialog(btnAddMember, "Please enter a correct zip length", "Error",
+			JOptionPane.showMessageDialog(btnAddAuthor, "Please enter a correct zip length", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (!zip.matches("[0-9]+")) {
-			JOptionPane.showMessageDialog(btnAddMember, "Zip code should only include numbers", "Error",
+			JOptionPane.showMessageDialog(btnAddAuthor, "Zip code should only include numbers", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 
 		if (tel.isEmpty()) {
-			JOptionPane.showMessageDialog(btnAddMember, "Please enter your 10 digit tel number", "Error",
+			JOptionPane.showMessageDialog(btnAddAuthor, "Please enter your 10 digit tel number", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (!tel.matches("[0-9]+")) {
-			JOptionPane.showMessageDialog(btnAddMember, "Telephone number should only include numbers", "Error",
+			JOptionPane.showMessageDialog(btnAddAuthor, "Telephone number should only include numbers", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (tel.length() != 10) {
-			JOptionPane.showMessageDialog(btnAddMember, "Please enter a valid telephone number.", "Error",
+			JOptionPane.showMessageDialog(btnAddAuthor, "Please enter a valid telephone number.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -262,10 +263,5 @@ public void init() {
 		return true;
 		
 	}
-
-	
-
-	
-
 	
 }

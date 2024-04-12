@@ -17,7 +17,12 @@ public class Util {
 	public static final Color LINK_AVAILABLE = DARK_BLUE;
 	public static final Color LINK_NOT_AVAILABLE = Color.gray;
 	//rgb(18, 75, 14)
-	
+	public static String generateRandomizedId() {
+		// Get current timestamp in milliseconds
+		long timestamp = System.currentTimeMillis();
+
+		return timestamp + "";
+	}
 	public static Font makeSmallFont(Font f) {
         return new Font(f.getName(), f.getStyle(), (f.getSize()-2));
     }

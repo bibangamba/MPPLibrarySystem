@@ -35,7 +35,14 @@ public class SystemController implements ControllerInterface {
 		da.saveNewMember(member);
 	}
 	
-	
+	// add author
+		public void addAuthor(String fname, String lname, String tel,String street, String city, String state, String zip, String bio) throws LibrarySystemException {
+			Address add = new Address(street, city,  state,  zip);
+			Author au = new Author( fname, lname, tel,add, bio);
+			DataAccess da = new DataAccessFacade();
+			da.saveNewAuthor(au);
+		}
+		
 	
 	//
 	@Override

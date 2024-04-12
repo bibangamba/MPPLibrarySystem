@@ -13,7 +13,7 @@ import java.util.List;
 public class LibrarySystem extends JFrame implements LibWindow {
     public final static LibrarySystem INSTANCE = new LibrarySystem();
     private static LibWindow[] allWindows = {LibrarySystem.INSTANCE, LoginWindow.INSTANCE,
-            AllMemberIdsWindow.INSTANCE, AllBookIdsWindow.INSTANCE, AddMember.INSTANCE};
+            AllMemberIdsWindow.INSTANCE, AllBookIdsWindow.INSTANCE, AddMember.INSTANCE,AddAuthorWindow.INSTANCE};
     ControllerInterface ci = new SystemController();
     JPanel mainPanel;
     JMenuBar menuBar;
@@ -174,6 +174,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
         JMenuItem checkoutOverDue = new JMenuItem("Checkout Overdue");
         checkoutOverDue.addActionListener(e -> {
             // todo: checkout book window
+//        	add author
+        	LibrarySystem.hideAllWindows();
+            AddAuthorWindow.INSTANCE.init();
+            AddAuthorWindow.INSTANCE.setVisible(true);
         });
         options.add(checkoutOverDue);
     }

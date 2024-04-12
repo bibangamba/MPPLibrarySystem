@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 
+import business.Author;
 import business.Book;
 import business.BookCopy;
 import business.LibraryMember;
@@ -18,16 +19,16 @@ import dataaccess.DataAccessFacade.StorageType;
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS;
+		BOOKS, MEMBERS, USERS,AUTHORS;
 	}
 	// Windows user can use
 	
-	/*public static final String OUTPUT_DIR = System.getProperty("user.dir") 
-			+ "\\src\\dataaccess\\storage";*/
+	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
+			+ "\\src\\dataaccess\\storage";
 	
 	// For Mac Users path can use / 
-	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
-			+ "/src/dataaccess/storage";
+//	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
+//			+ "/src/dataaccess/storage";
 	
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
@@ -38,7 +39,13 @@ public class DataAccessFacade implements DataAccess {
 		mems.put(memberId, member);
 		saveToStorage(StorageType.MEMBERS, mems);	
 	}
-	
+//	save author
+	public void saveNewAuthor(Author author) {
+		HashMap<String, Author> authors = readAuthorMap();
+		String authorId = author.getAuthorId();
+		authors.put(authorId, author);
+		saveToStorage(StorageType.MEMBERS, authors);	
+	}
 	@SuppressWarnings("unchecked")
 	public  HashMap<String,Book> readBooksMap() {
 		//Returns a Map with name/value pairs being
@@ -54,7 +61,13 @@ public class DataAccessFacade implements DataAccess {
 				StorageType.MEMBERS);
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	public HashMap<String, Author> readAuthorMap() {
+		//Returns a Map with name/value pairs being
+		//   authorId -> Author
+		return (HashMap<String, Author>) readFromStorage(
+				StorageType.AUTHORS);
+	}
 	@SuppressWarnings("unchecked")
 	public HashMap<String, User> readUserMap() {
 		//Returns a Map with name/value pairs being
@@ -83,7 +96,11 @@ public class DataAccessFacade implements DataAccess {
 		memberList.forEach(member -> members.put(member.getMemberId(), member));
 		saveToStorage(StorageType.MEMBERS, members);
 	}
-	
+	static void loadAuthorMap(List<Author> authorList) {
+		HashMap<String, Author> authors = new HashMap<String, Author>();
+		authorList.forEach(author -> authors.put(author.getAuthorId(), author));
+		saveToStorage(StorageType.AUTHORS, authors);
+	}
 	static void saveToStorage(StorageType type, Object ob) {
 		ObjectOutputStream out = null;
 		try {
