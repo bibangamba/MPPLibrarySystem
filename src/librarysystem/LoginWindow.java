@@ -28,10 +28,6 @@ public class LoginWindow extends JFrame implements LibWindow {
         isInitialized = val;
     }
 
-    public void clear() {
-        messageBar.setText("");
-    }
-
     /**
      * @wbp.parser.entryPoint
      */

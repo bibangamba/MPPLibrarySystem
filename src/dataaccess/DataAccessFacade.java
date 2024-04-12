@@ -19,14 +19,14 @@ import java.util.List;
 
 public class DataAccessFacade implements DataAccess {
 
-    public static final String OUTPUT_DIR = System.getProperty("user.dir")
-            + "\\src\\dataaccess\\storage";
+//    public static final String OUTPUT_DIR = System.getProperty("user.dir")
+//            + "\\src\\dataaccess\\storage";
     // Windows user can use
     public static final String DATE_PATTERN = "MM/dd/yyyy";
 
     // For Mac Users path can use /
-//	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
-//			+ "/src/dataaccess/storage";
+	public static final String OUTPUT_DIR = System.getProperty("user.dir")
+			+ "/src/dataaccess/storage";
 
     static void loadBookMap(List<Book> bookList) {
         HashMap<String, Book> books = new HashMap<String, Book>();
@@ -75,6 +75,7 @@ public class DataAccessFacade implements DataAccess {
         Object retVal = null;
         try {
             Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
+            System.out.println("####### path"+path);
             in = new ObjectInputStream(Files.newInputStream(path));
             retVal = in.readObject();
         } catch (Exception e) {
@@ -103,12 +104,13 @@ public class DataAccessFacade implements DataAccess {
         HashMap<String, Author> authors = readAuthorMap();
         String authorId = author.getAuthorId();
         authors.put(authorId, author);
-        saveToStorage(StorageType.MEMBERS, authors);
+        saveToStorage(StorageType.AUTHORS, authors);
     }
 
     @Override
     public List<Author> getAuthorsFromIds(List<String> authorIds) throws BookException {
         HashMap<String, Author> authors = readAuthorMap();
+        
         List<Author> authorList = new ArrayList<>();
         for (String authorId : authorIds) {
             Author a = authors.get(authorId);
@@ -131,23 +133,29 @@ public class DataAccessFacade implements DataAccess {
     public HashMap<String, Book> readBooksMap() {
         //Returns a Map with name/value pairs being
         //   isbn -> Book
-        return (HashMap<String, Book>) readFromStorage(StorageType.BOOKS);
+    	HashMap<String, Book> booksMap = (HashMap<String, Book>) readFromStorage(StorageType.BOOKS);
+    	if (booksMap == null) return new HashMap<>();
+    	return booksMap;
     }
 
     @SuppressWarnings("unchecked")
     public HashMap<String, LibraryMember> readMemberMap() {
         //Returns a Map with name/value pairs being
         //   memberId -> LibraryMember
-        return (HashMap<String, LibraryMember>) readFromStorage(
+        HashMap<String, LibraryMember> memberMap = (HashMap<String, LibraryMember>) readFromStorage(
                 StorageType.MEMBERS);
+        if (memberMap == null) return new HashMap<>();
+        return memberMap;
     }
 
     @SuppressWarnings("unchecked")
     public HashMap<String, Author> readAuthorMap() {
         //Returns a Map with name/value pairs being
         //   authorId -> Author
-        return (HashMap<String, Author>) readFromStorage(
-                StorageType.AUTHORS);
+    	HashMap<String, Author> authorsMap = (HashMap<String, Author>) readFromStorage(StorageType.AUTHORS); 
+    	if (authorsMap == null) return new HashMap<>();
+    	
+    	return authorsMap;
     }
 
     @SuppressWarnings("unchecked")

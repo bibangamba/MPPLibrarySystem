@@ -48,7 +48,7 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
 	
 	public void defineTopPanel() {
 		topPanel = new JPanel();
-		JLabel AllIDsLabel = new JLabel("All Book IDs");
+		JLabel AllIDsLabel = new JLabel("All Books");
 		Util.adjustLabelFont(AllIDsLabel, Util.DARK_BLUE, true);
 		topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		topPanel.add(AllIDsLabel);
@@ -58,7 +58,7 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
 		middlePanel = new JPanel();
 		FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 25, 25);
 		middlePanel.setLayout(fl);
-		textArea = new TextArea(8, 20);
+		textArea = new TextArea(12, 60);
 		//populateTextArea();
 		middlePanel.add(textArea);
 		

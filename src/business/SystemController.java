@@ -8,6 +8,7 @@ import dataaccess.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SystemController implements ControllerInterface {
     private static Auth currentAuth = null;
@@ -47,9 +48,12 @@ public class SystemController implements ControllerInterface {
 
         List<Author> authors = da.getAuthorsFromIds(authorIds);
 
-        Author sandra = new Author("Sandra", "Thomas", "641-445-2123", new Address("1000 N 4th ST", "Fairfield", "IA", "52556"), "");
-        // check if isbn already exists
         Book book = new Book(isbn, title, maxCheckoutDuration, authors);
+        int copiesToAdd = copies-1;
+        while( copiesToAdd > 0){
+            book.addCopy();
+            copiesToAdd--;
+        }
 
         da.saveNewBook(book);
     }
@@ -58,7 +62,9 @@ public class SystemController implements ControllerInterface {
     public List<String> allMemberIds() {
         DataAccess da = new DataAccessFacade();
         List<String> retval = new ArrayList<>();
-        retval.addAll(da.readMemberMap().keySet());
+        for (Map.Entry<String, LibraryMember> member : da.readMemberMap().entrySet()){
+            retval.add(String.format("%s (mem id) - %s", member.getKey(), member.getValue().getName()));
+        }
         return retval;
     }
 
@@ -66,8 +72,20 @@ public class SystemController implements ControllerInterface {
     public List<String> allBookIds() {
         DataAccess da = new DataAccessFacade();
         List<String> retval = new ArrayList<>();
-        retval.addAll(da.readBooksMap().keySet());
+        for (Map.Entry<String, Book> book : da.readBooksMap().entrySet()){
+            retval.add(String.format("%s (isbn) - %s", book.getKey(), book.getValue().getTitle()));
+        }
         return retval;
+    }
+
+    @Override
+    public List<String> getAllAuthors() {
+        DataAccess da = new DataAccessFacade();
+        List<String> authorsWithId = new ArrayList<>();
+        for (Map.Entry<String, Author> author : da.readAuthorMap().entrySet()){
+            authorsWithId.add(String.format("%s (id) - %s", author.getKey(), author.getValue().getName()));
+        }
+        return authorsWithId;
     }
 
 

@@ -12,8 +12,11 @@ import java.util.List;
 
 public class LibrarySystem extends JFrame implements LibWindow {
     public final static LibrarySystem INSTANCE = new LibrarySystem();
-    private static LibWindow[] allWindows = {LibrarySystem.INSTANCE, LoginWindow.INSTANCE,
-            AllMemberIdsWindow.INSTANCE, AllBookIdsWindow.INSTANCE, AddMember.INSTANCE,AddAuthorWindow.INSTANCE};
+    private static LibWindow[] allWindows = {
+            LibrarySystem.INSTANCE, LoginWindow.INSTANCE,
+            AllMemberIdsWindow.INSTANCE, AllBookIdsWindow.INSTANCE, AddMember.INSTANCE,
+            AddAuthorWindow.INSTANCE, AllAuthorsWindow.INSTANCE, BookWindow.INSTANCE
+    };
     ControllerInterface ci = new SystemController();
     JPanel mainPanel;
     JMenuBar menuBar;
@@ -150,11 +153,11 @@ public class LibrarySystem extends JFrame implements LibWindow {
             // todo: add book copy window
         });
         options.add(addBookCopy);
-        
+
         JMenuItem addMember = new JMenuItem("Add Member");
         addMember.addActionListener(e -> {
             // add member window
-        	LibrarySystem.hideAllWindows();
+            LibrarySystem.hideAllWindows();
             AddMember.INSTANCE.init();
             AddMember.INSTANCE.setVisible(true);
         });
@@ -162,7 +165,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     }
 
     private void librarianMenuItems() {
-        JMenuItem checkoutBook = new     JMenuItem("Checkout Book");
+        JMenuItem checkoutBook = new JMenuItem("Checkout Book");
         checkoutBook.addActionListener(e -> {
             // todo: checkout book window
         });
@@ -172,17 +175,19 @@ public class LibrarySystem extends JFrame implements LibWindow {
         checkoutRecord.addActionListener(e -> {
             // todo: checkout book window
         });
-        options.add(checkoutRecord);
+        // not required for demo
+//        options.add(checkoutRecord);
 
         JMenuItem checkoutOverDue = new JMenuItem("Checkout Overdue");
         checkoutOverDue.addActionListener(e -> {
             // todo: checkout book window
 //        	add author
-        	LibrarySystem.hideAllWindows();
+            LibrarySystem.hideAllWindows();
             AddAuthorWindow.INSTANCE.init();
             AddAuthorWindow.INSTANCE.setVisible(true);
         });
-        options.add(checkoutOverDue);
+        // not required for demo
+//        options.add(checkoutOverDue);
     }
 
     private void addLoggedOutMenuItems() {
@@ -190,7 +195,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
         menuBar.add(options);
 
         login = new JMenuItem("Login");
-        login.addActionListener(e->{
+        login.addActionListener(e -> {
             LibrarySystem.hideAllWindows();
             LoginWindow.INSTANCE.init();
             Util.centerFrameOnDesktop(LoginWindow.INSTANCE);
@@ -225,7 +230,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
             for (String s : ids) {
                 sb.append(s + "\n");
             }
-            System.out.println(sb.toString());
+            System.out.println(sb);
             AllBookIdsWindow.INSTANCE.setData(sb.toString());
             AllBookIdsWindow.INSTANCE.pack();
             // AllBookIdsWindow.INSTANCE.setSize(660,500);
@@ -242,25 +247,19 @@ public class LibrarySystem extends JFrame implements LibWindow {
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();
             AllMemberIdsWindow.INSTANCE.init();
-            AllMemberIdsWindow.INSTANCE.pack();
-            AllMemberIdsWindow.INSTANCE.setVisible(true);
-
-            LibrarySystem.hideAllWindows();
-            AllBookIdsWindow.INSTANCE.init();
 
             List<String> ids = ci.allMemberIds();
             Collections.sort(ids);
             StringBuilder sb = new StringBuilder();
             for (String s : ids) {
-                sb.append(s + "\n");
+                sb.append(s).append("\n");
             }
-            System.out.println(sb.toString());
+            System.out.println(sb);
             AllMemberIdsWindow.INSTANCE.setData(sb.toString());
             AllMemberIdsWindow.INSTANCE.pack();
             // AllMemberIdsWindow.INSTANCE.setSize(660,500);
             Util.centerFrameOnDesktop(AllMemberIdsWindow.INSTANCE);
             AllMemberIdsWindow.INSTANCE.setVisible(true);
-
         }
 
     }

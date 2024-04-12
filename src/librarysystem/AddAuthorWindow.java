@@ -179,7 +179,7 @@ getContentPane().setLayout(null);
 		JButton backBtn = new JButton("Back");
         backBtn.addActionListener(e -> {
             LibrarySystem.hideAllWindows();
-            LibrarySystem.INSTANCE.setVisible(true);
+            BookWindow.INSTANCE.setVisible(true);
         });
         backBtn.setBounds(0, 0, 75, 20);
         panel.add(backBtn);

@@ -6,6 +6,7 @@ import business.SystemController;
 
 import javax.swing.*;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class BookWindow extends JFrame implements LibWindow {
@@ -112,16 +113,44 @@ public class BookWindow extends JFrame implements LibWindow {
         JButton backBtn = new JButton("< Back");
         backBtn.addActionListener(e -> {
             LibrarySystem.hideAllWindows();
-            dispose();
             LibrarySystem.INSTANCE.setVisible(true);
         });
         backBtn.setBounds(6, 190, 87, 29);
         panel.add(backBtn);
 
 
-        JButton authorsBtn = new JButton("View/Add Author(s)");
-        authorsBtn.setBounds(289, 131, 149, 29);
-        panel.add(authorsBtn);
+        JButton addAuthorBtn = new JButton("Add");
+        addAuthorBtn.setBounds(281, 131, 73, 29);
+        panel.add(addAuthorBtn);
+
+        JButton viewAuthorsBtn = new JButton("View");
+        viewAuthorsBtn.setBounds(351, 131, 73, 29);
+        panel.add(viewAuthorsBtn);
+
+        viewAuthorsBtn.addActionListener(e -> {
+            LibrarySystem.hideAllWindows();
+            AllAuthorsWindow.INSTANCE.init();
+            AllAuthorsWindow.INSTANCE.setVisible(true);
+
+            ControllerInterface ci = new SystemController();
+            List<String> authors = ci.getAllAuthors();
+            Collections.sort(authors);
+            StringBuilder sb = new StringBuilder();
+            for (String s : authors) {
+                sb.append(s).append("\n");
+            }
+            AllAuthorsWindow.INSTANCE.setData(sb.toString());
+            AllAuthorsWindow.INSTANCE.pack();
+            Util.centerFrameOnDesktop(AllAuthorsWindow.INSTANCE);
+            AllAuthorsWindow.INSTANCE.setVisible(true);
+        });
+
+        addAuthorBtn.addActionListener(e -> {
+            LibrarySystem.hideAllWindows();
+            AddAuthorWindow.INSTANCE.init();
+            AddAuthorWindow.INSTANCE.setVisible(true);
+        });
+
         isInitialized(true);
         setVisible(true);
         setSize(430, 270);
@@ -148,11 +177,10 @@ public class BookWindow extends JFrame implements LibWindow {
                 ci.addBook(isbn, title, copies, checkoutDays, authorIds);
 
                 JOptionPane.showMessageDialog(this, "Book added!");
-
                 LibrarySystem.hideAllWindows();
-                dispose();
                 LibrarySystem.INSTANCE.init();
                 LibrarySystem.INSTANCE.setVisible(true);
+
             } catch (NumberFormatException ne) {
                 System.out.println("###### isbn: " + isbnField.getText());
                 System.out.println("###### title: " + titleField.getText());
