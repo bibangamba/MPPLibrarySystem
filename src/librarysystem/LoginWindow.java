@@ -11,13 +11,12 @@ public class LoginWindow extends JFrame implements LibWindow {
 
     private boolean isInitialized = false;
 
-    private JTextField messageBar = new JTextField();
     private JTextField usernameField;
     private JPasswordField passwordField;
 
     /* This class is a singleton */
     private LoginWindow() {
-
+        init();
     }
 
     public boolean isInitialized() {
@@ -32,7 +31,6 @@ public class LoginWindow extends JFrame implements LibWindow {
      * @wbp.parser.entryPoint
      */
     public void init() {
-        System.out.println("### Login init called again!");
         getContentPane().setLayout(null);
 
         JPanel panel = new JPanel();
@@ -70,6 +68,9 @@ public class LoginWindow extends JFrame implements LibWindow {
             String pwd = String.valueOf(passwordField.getPassword());
             ControllerInterface ci = new SystemController();
             try {
+
+                System.out.println("###### Username field string obj: "+usernameField.hashCode());
+
                 System.out.println("###### username: "+username+"pwd: "+pwd);
                 ci.login(username, pwd);
                 JOptionPane.showMessageDialog(this, "Login successful!");
@@ -92,7 +93,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 
         getContentPane().add(panel);
         isInitialized(true);
-        setVisible(true);
+//        setVisible(true);
         setSize(420, 300);
     }
 }

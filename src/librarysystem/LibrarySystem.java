@@ -58,7 +58,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
         String currDirectory = System.getProperty("user.dir");
         System.out.println(currDirectory);
         pathToImage = currDirectory + String.format("%ssrc%slibrarysystem%slibrary.jpg",
-                File.pathSeparator, File.pathSeparator, File.pathSeparator);
+                File.separator, File.separator, File.separator);
+        System.out.println("##### path to image: "+pathToImage);
     }
 
     private void insertSplashImage() {
@@ -202,7 +203,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
         login = new JMenuItem("Login");
         login.addActionListener(e -> {
             LibrarySystem.hideAllWindows();
-            LoginWindow.INSTANCE.init();
+//            LoginWindow.INSTANCE.init();
             Util.centerFrameOnDesktop(LoginWindow.INSTANCE);
             LoginWindow.INSTANCE.setVisible(true);
         });
