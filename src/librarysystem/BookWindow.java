@@ -178,15 +178,18 @@ public class BookWindow extends JFrame implements LibWindow {
                 ci.addBook(isbn, title, checkoutDays, copies, authorIds);
 
                 JOptionPane.showMessageDialog(this, "Book added!");
+
                 LibrarySystem.hideAllWindows();
                 LibrarySystem.INSTANCE.init();
                 LibrarySystem.INSTANCE.setVisible(true);
 
+                // reset fields
+                isbnField.setText("");
+                titleField.setText("");
+                authorsField.setText("");
+                bookCopiesField.setText("");
+
             } catch (NumberFormatException ne) {
-                System.out.println("###### isbn: " + isbnField.getText());
-                System.out.println("###### title: " + titleField.getText());
-                System.out.println("###### 7 days: " + radioBtn7Days.isSelected());
-                System.out.println("###### Copies field: " + bookCopiesField.getText());
                 JOptionPane.showMessageDialog(this, "Number of copies must be a number");
             } catch (BookException ex) {
                 JOptionPane.showMessageDialog(this, "Failed to add the book. Reason:" + ex.getMessage());
