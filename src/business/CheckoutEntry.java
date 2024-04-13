@@ -1,8 +1,10 @@
 package business;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class CheckoutEntry {
+public class CheckoutEntry implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private LocalDate dueDate;
 	private LocalDate checkoutDate;
 	private BookCopy bookCopy;
@@ -14,6 +16,9 @@ public class CheckoutEntry {
 		this.bookCopy = bookCopy;
 		this.dueDate = dueDate;
 		this.checkoutDate = checkoutDate;
+		
+		//change the availability of this copy to false
+		bookCopy.changeAvailability();
 	}
 	
 	

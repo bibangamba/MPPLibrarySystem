@@ -15,7 +15,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     private static LibWindow[] allWindows = {
             LibrarySystem.INSTANCE, LoginWindow.INSTANCE,
             AllMemberIdsWindow.INSTANCE, AllBookIdsWindow.INSTANCE, AddMember.INSTANCE,
-            AddAuthorWindow.INSTANCE, AllAuthorsWindow.INSTANCE, BookWindow.INSTANCE
+            AddAuthorWindow.INSTANCE, AllAuthorsWindow.INSTANCE, BookWindow.INSTANCE, CheckoutBookWindow.INSTANCE
     };
     ControllerInterface ci = new SystemController();
     JPanel mainPanel;
@@ -168,6 +168,9 @@ public class LibrarySystem extends JFrame implements LibWindow {
         JMenuItem checkoutBook = new JMenuItem("Checkout Book");
         checkoutBook.addActionListener(e -> {
             // todo: checkout book window
+        	LibrarySystem.hideAllWindows();
+        	CheckoutBookWindow.INSTANCE.init();
+        	CheckoutBookWindow.INSTANCE.setVisible(true);
         });
         options.add(checkoutBook);
 

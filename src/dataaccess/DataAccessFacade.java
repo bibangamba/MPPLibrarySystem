@@ -99,6 +99,13 @@ public class DataAccessFacade implements DataAccess {
         saveToStorage(StorageType.MEMBERS, mems);
     }
 
+ // update libraryMember when checkoutBook created and linking new checkoutEntry to libraryMember
+ 	public void updateMember(String memberId, LibraryMember member) {
+ 		HashMap<String, LibraryMember> mems = readMemberMap();
+ 		mems.put(memberId, member);
+ 		saveToStorage(StorageType.MEMBERS, mems);	
+ 	}
+ 	
     //	save author
     public void saveNewAuthor(Author author) {
         HashMap<String, Author> authors = readAuthorMap();

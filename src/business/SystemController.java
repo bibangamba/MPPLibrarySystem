@@ -5,6 +5,7 @@ import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import dataaccess.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,7 +74,7 @@ public class SystemController implements ControllerInterface {
         DataAccess da = new DataAccessFacade();
         List<String> retval = new ArrayList<>();
         for (Map.Entry<String, Book> book : da.readBooksMap().entrySet()){
-            retval.add(String.format("%s (isbn) - %s", book.getKey(), book.getValue().getTitle()));
+            retval.add(String.format("%s (isbn) - %s (copies: %s)", book.getKey(), book.getValue().getTitle(), book.getValue().getNumAvailable()));
         }
         return retval;
     }
@@ -105,5 +106,65 @@ public class SystemController implements ControllerInterface {
         da.saveNewAuthor(au);
     }
 
-
+    public Book getBookById(String id){
+		DataAccess da = new DataAccessFacade();
+		return da.readBooksMap().get(id);
+	}
+	
+	public LibraryMember getMemberById(String id){
+		DataAccess da = new DataAccessFacade();
+		return da.readMemberMap().get(id);
+	}
+	
+	// create a checkout book as a librarian 
+	public void CreateCheckoutBook(String BookID, String MemberID) throws LibrarySystemException {
+		// get book object by id
+		Book targetBook = getBookById(BookID);
+		if(targetBook == null) {
+			throw new LibrarySystemException("book does not exist");
+		}
+		if(targetBook.getNumAvailable() == 0) {
+			throw new LibrarySystemException("no copy book available");
+		}
+		System.out.println(String.format("before checkout ===> copies: %s", targetBook.getNumAvailable()));
+		// get an available bookCopy object
+		BookCopy availableBookCopy = targetBook.getNextAvailableCopy();
+		
+		// create a CheckoutEntry object
+		CheckoutEntry newRecordEntry = new CheckoutEntry(
+				LocalDate.now(),
+				LocalDate.now().plusDays(targetBook.getMaxCheckoutLength()),
+				availableBookCopy);
+		
+		// get Member object by id
+		LibraryMember libraryMember = getMemberById(MemberID);
+		if(libraryMember == null) {
+			throw new LibrarySystemException("library Member does not exist");
+		}
+		// if member has a CheckoutRecord if yes then add RecordEntity to it,
+		// if not create new CheckoutRecord and linked to member and RecordEntity
+		
+		if(libraryMember.getCheckoutRecord() == null){
+			System.out.println("libraryMember has no checkoutRecord");
+			System.out.println(newRecordEntry.toString());
+			CheckoutRecord newCheckoutRecord = new CheckoutRecord();
+			newCheckoutRecord.addCheckoutEntry(newRecordEntry);
+			libraryMember.setCheckoutRecord(newCheckoutRecord);
+		}else {
+			System.out.println("libraryMember has checkoutRecord");
+			CheckoutRecord libraryMemberCheckoutRecord = libraryMember.getCheckoutRecord();
+			libraryMemberCheckoutRecord.addCheckoutEntry(newRecordEntry);
+		}
+		
+		//update
+		updateLibraryMember(MemberID, libraryMember);
+		System.out.println(String.format("after checkout ===> copies: %s", targetBook.getNumAvailable()));
+		
+	}
+	
+	public void updateLibraryMember(String memberId, LibraryMember libraryMember) {
+		DataAccess da = new DataAccessFacade();
+		da.updateMember(memberId, libraryMember);
+	}
+	
 }
