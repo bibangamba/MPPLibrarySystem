@@ -29,6 +29,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     private boolean isInitialized = false;
 
     private LibrarySystem() {
+        init();
     }
 
     public static void hideAllWindows() {
@@ -146,7 +147,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
         JMenuItem addBook = new JMenuItem("Add Book");
         addBook.addActionListener(e -> {
             LibrarySystem.hideAllWindows();
-            BookWindow.INSTANCE.init();
+//            BookWindow.INSTANCE.init();
             Util.centerFrameOnDesktop(BookWindow.INSTANCE);
             BookWindow.INSTANCE.setVisible(true);
 
@@ -156,7 +157,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
         JMenuItem addBookCopy = new JMenuItem("Add Book Copy");
         addBookCopy.addActionListener(e -> {
             LibrarySystem.hideAllWindows();
-            AddBookCopyWindow.INSTANCE.init();
+//            AddBookCopyWindow.INSTANCE.init();
             Util.centerFrameOnDesktop(BookWindow.INSTANCE);
             AddBookCopyWindow.INSTANCE.setVisible(true);
         });
@@ -166,7 +167,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
         addMember.addActionListener(e -> {
             // add member window
             LibrarySystem.hideAllWindows();
-            AddMember.INSTANCE.init();
+//            AddMember.INSTANCE.init();
             AddMember.INSTANCE.setVisible(true);
         });
         options.add(addMember);
@@ -176,7 +177,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
         JMenuItem checkoutBook = new JMenuItem("Checkout Book");
         checkoutBook.addActionListener(e -> {
             LibrarySystem.hideAllWindows();
-            CheckoutBookWindow.INSTANCE.init();
+//            CheckoutBookWindow.INSTANCE.init();
             CheckoutBookWindow.INSTANCE.setVisible(true);
         });
         options.add(checkoutBook);
@@ -228,7 +229,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
         @Override
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();
-            AllBookIdsWindow.INSTANCE.init();
+//            AllBookIdsWindow.INSTANCE.init();
 
             List<String> ids = ci.allBookIds();
             Collections.sort(ids);
@@ -252,7 +253,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
         @Override
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();
-            AllMemberIdsWindow.INSTANCE.init();
+//            AllMemberIdsWindow.INSTANCE.init();
 
             List<String> ids = ci.allMemberIds();
             Collections.sort(ids);

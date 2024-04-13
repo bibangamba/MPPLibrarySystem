@@ -27,7 +27,9 @@ public class AllMemberIdsWindow extends JFrame implements LibWindow {
 	private JPanel lowerPanel;
 	private TextArea textArea;
 	
-	private AllMemberIdsWindow() {}
+	private AllMemberIdsWindow() {
+		init();
+	}
 	
 	public void init() {
 		mainPanel = new JPanel();

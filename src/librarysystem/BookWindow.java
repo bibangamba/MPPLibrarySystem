@@ -23,6 +23,7 @@ public class BookWindow extends JFrame implements LibWindow {
 
     /* This class is a singleton */
     private BookWindow() {
+        init();
     }
 
     public boolean isInitialized() {
@@ -129,7 +130,7 @@ public class BookWindow extends JFrame implements LibWindow {
 
         viewAuthorsBtn.addActionListener(e -> {
             LibrarySystem.hideAllWindows();
-            AllAuthorsWindow.INSTANCE.init();
+//            AllAuthorsWindow.INSTANCE.init();
             AllAuthorsWindow.INSTANCE.setVisible(true);
 
             ControllerInterface ci = new SystemController();
@@ -147,12 +148,12 @@ public class BookWindow extends JFrame implements LibWindow {
 
         addAuthorBtn.addActionListener(e -> {
             LibrarySystem.hideAllWindows();
-            AddAuthorWindow.INSTANCE.init();
+//            AddAuthorWindow.INSTANCE.init();
             AddAuthorWindow.INSTANCE.setVisible(true);
         });
 
         isInitialized(true);
-        setVisible(true);
+//        setVisible(true);
         setSize(430, 270);
     }
 

@@ -17,6 +17,7 @@ public class AddBookCopyWindow extends JFrame implements LibWindow {
 
     /* This class is a singleton */
     private AddBookCopyWindow() {
+        init();
     }
 
     public boolean isInitialized() {
@@ -75,7 +76,7 @@ public class AddBookCopyWindow extends JFrame implements LibWindow {
 
         getContentPane().add(panel);
         isInitialized(true);
-        setVisible(true);
+//        setVisible(true);
         setSize(375, 210);
     }
 

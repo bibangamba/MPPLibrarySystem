@@ -23,7 +23,9 @@ public class AllAuthorsWindow extends JFrame implements LibWindow {
 
 
 	//Singleton class
-	private AllAuthorsWindow() {}
+	private AllAuthorsWindow() {
+		init();
+	}
 	
 	public void init() {
 		mainPanel = new JPanel();

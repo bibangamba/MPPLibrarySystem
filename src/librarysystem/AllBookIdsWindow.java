@@ -31,7 +31,9 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
 	
 
 	//Singleton class
-	private AllBookIdsWindow() {}
+	private AllBookIdsWindow() {
+		init();
+	}
 	
 	public void init() {
 		mainPanel = new JPanel();

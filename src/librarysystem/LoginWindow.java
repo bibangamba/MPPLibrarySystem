@@ -73,6 +73,9 @@ public class LoginWindow extends JFrame implements LibWindow {
 
                 System.out.println("###### username: "+username+"pwd: "+pwd);
                 ci.login(username, pwd);
+                usernameField.setText("");
+                passwordField.setText("");
+
                 JOptionPane.showMessageDialog(this, "Login successful!");
                 LibrarySystem.hideAllWindows();
                 LibrarySystem.INSTANCE.init();
