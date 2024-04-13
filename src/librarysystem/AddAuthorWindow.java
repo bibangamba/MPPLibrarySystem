@@ -22,6 +22,7 @@ public class AddAuthorWindow extends JFrame implements LibWindow {
     private JTextField txtTelNum;
     private JLabel lblBio;
     private JTextArea txtBio;
+    private JLabel addAuthorLabel;
 
     private AddAuthorWindow() {
         init();
@@ -42,24 +43,24 @@ public class AddAuthorWindow extends JFrame implements LibWindow {
         getContentPane().setLayout(null);
 
         panel = new JPanel();
-        panel.setBounds(10, 11, 593, 598);
+        panel.setBounds(10, 11, 593, 518);
         getContentPane().add(panel);
         JLabel lblfname = new JLabel("First Name");
-        lblfname.setBounds(76, 24, 138, 22);
+        lblfname.setBounds(76, 48, 89, 22);
 
         txtFName = new JTextField();
-        txtFName.setBounds(273, 24, 273, 22);
+        txtFName.setBounds(189, 48, 273, 22);
         txtFName.setColumns(10);
         panel.setLayout(null);
         panel.add(lblfname);
         panel.add(txtFName);
 
         JLabel lblLname = new JLabel("Last Name");
-        lblLname.setBounds(76, 70, 138, 22);
+        lblLname.setBounds(76, 82, 75, 22);
         panel.add(lblLname);
 
         txtLname = new JTextField();
-        txtLname.setBounds(273, 70, 273, 22);
+        txtLname.setBounds(189, 82, 273, 22);
         txtLname.setColumns(10);
         panel.add(txtLname);
 
@@ -68,46 +69,46 @@ public class AddAuthorWindow extends JFrame implements LibWindow {
         panel.add(lblStreet);
 
         txtStreet = new JTextField();
-        txtStreet.setBounds(273, 116, 273, 22);
+        txtStreet.setBounds(189, 116, 273, 22);
         txtStreet.setColumns(10);
         panel.add(txtStreet);
 
         JLabel lblCity = new JLabel("City");
-        lblCity.setBounds(76, 162, 138, 22);
+        lblCity.setBounds(76, 150, 138, 22);
         panel.add(lblCity);
 
         txtCity = new JTextField();
-        txtCity.setBounds(273, 162, 273, 22);
+        txtCity.setBounds(189, 150, 273, 22);
         txtCity.setColumns(10);
         panel.add(txtCity);
 
         JLabel lblState = new JLabel("State");
-        lblState.setBounds(76, 208, 138, 22);
+        lblState.setBounds(76, 184, 138, 22);
         panel.add(lblState);
 
         txtState = new JTextField();
-        txtState.setBounds(273, 208, 273, 22);
+        txtState.setBounds(189, 184, 273, 22);
         txtState.setColumns(10);
         panel.add(txtState);
 
         JLabel lblZip = new JLabel("Zip");
-        lblZip.setBounds(76, 254, 138, 22);
+        lblZip.setBounds(76, 218, 138, 22);
         panel.add(lblZip);
 
         txtZip = new JTextField();
-        txtZip.setBounds(273, 254, 273, 22);
+        txtZip.setBounds(189, 218, 273, 22);
         txtZip.setColumns(10);
         panel.add(txtZip);
 
         JLabel lblTelNumber = new JLabel("Tel-Number");
-        lblTelNumber.setBounds(76, 300, 138, 22);
+        lblTelNumber.setBounds(76, 252, 138, 22);
         panel.add(lblTelNumber);
 
         txtTelNum = new JTextField();
-        txtTelNum.setBounds(273, 300, 273, 22);
+        txtTelNum.setBounds(189, 252, 273, 22);
         txtTelNum.setColumns(10);
         panel.add(txtTelNum);
-        btnAddAuthor.setBounds(144, 528, 273, 46);
+        btnAddAuthor.setBounds(346, 470, 116, 29);
         btnAddAuthor.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (validateForm()) {
@@ -142,7 +143,7 @@ public class AddAuthorWindow extends JFrame implements LibWindow {
         panel.add(btnAddAuthor);
 
         lblBio = new JLabel("Bio");
-        lblBio.setBounds(76, 345, 107, 22);
+        lblBio.setBounds(76, 295, 107, 22);
         panel.add(lblBio);
 
         JButton backBtn = new JButton("Back");
@@ -150,17 +151,22 @@ public class AddAuthorWindow extends JFrame implements LibWindow {
             LibrarySystem.hideAllWindows();
             BookWindow.INSTANCE.setVisible(true);
         });
-        backBtn.setBounds(0, 0, 75, 20);
+        backBtn.setBounds(6, 474, 75, 20);
         panel.add(backBtn);
 
         getContentPane().add(panel);
 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(273, 344, 273, 134);
+        scrollPane.setBounds(189, 286, 273, 134);
         panel.add(scrollPane);
 
         txtBio = new JTextArea();
         scrollPane.setViewportView(txtBio);
+        
+        addAuthorLabel = new JLabel("Add Author");
+        addAuthorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        addAuthorLabel.setBounds(208, 6, 152, 16);
+        panel.add(addAuthorLabel);
         isInitialized(true);
 //	     setVisible(true);
         setSize(629, 659);

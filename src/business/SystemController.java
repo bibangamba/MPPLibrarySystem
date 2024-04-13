@@ -98,7 +98,11 @@ public class SystemController implements ControllerInterface {
     public int addBookCopy(String isbn, int copies) throws BookException {
         Book book = getBookById(isbn);
         if (book == null) throw new BookException("Book with ISBN: " + isbn + " was not found");
-        book.addCopy();
+        int copiesToAdd = copies;
+        while (copiesToAdd > 0) {
+            book.addCopy();
+            copiesToAdd--;
+        }
         //update db with new book copy
         updateBook(isbn, book);
         BookCopy bc = book.getCopies()[book.getCopies().length - 1];
