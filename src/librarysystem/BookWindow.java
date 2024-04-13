@@ -175,7 +175,7 @@ public class BookWindow extends JFrame implements LibWindow {
                 }
                 if (copies < 1) throw new BookException("Number of copies must be greater than 1");
 
-                ci.addBook(isbn, title, copies, checkoutDays, authorIds);
+                ci.addBook(isbn, title, checkoutDays, copies, authorIds);
 
                 JOptionPane.showMessageDialog(this, "Book added!");
                 LibrarySystem.hideAllWindows();

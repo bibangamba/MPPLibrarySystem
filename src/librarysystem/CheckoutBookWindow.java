@@ -79,15 +79,15 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
                     String bookID = BookID.getText();
                     SystemController cont = new SystemController();
                     try {
-                        cont.checkoutBook(bookID, memberID);
+                        int copyNum = cont.checkoutBook(bookID, memberID);
 
-                        JOptionPane.showMessageDialog(saveButton, "Book with id = " + bookID + "has been checked out to member with id = " + memberID,
+                        JOptionPane.showMessageDialog(saveButton, "Book with id = " + bookID + " (book copy number: " + copyNum + " ) has been checked out to member with id = " + memberID,
                                 "checkout created successfully", JOptionPane.INFORMATION_MESSAGE);
                         LibraryMemberId.setText("");
                         BookID.setText("");
                     } catch (LibrarySystemException e1) {
                         // TODO Auto-generated catch block
-                        e1.printStackTrace();
+//                        e1.printStackTrace();
                         JOptionPane.showMessageDialog(saveButton, e1.getMessage(), "Error",
                                 JOptionPane.ERROR_MESSAGE);
                     }

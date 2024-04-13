@@ -75,7 +75,11 @@ public class SystemController implements ControllerInterface {
         DataAccess da = new DataAccessFacade();
         List<String> retval = new ArrayList<>();
         for (Map.Entry<String, Book> book : da.readBooksMap().entrySet()) {
-            retval.add(String.format("%s (isbn) - %s (copies: %s)", book.getKey(), book.getValue().getTitle(), book.getValue().getNumAvailable()));
+            retval.add(String.format("%s (isbn) - %s (copies: %s of %s)",
+                    book.getKey(),
+                    book.getValue().getTitle(),
+                    book.getValue().getNumAvailable(),
+                    book.getValue().getCopies().length));
         }
         return retval;
     }
@@ -134,7 +138,7 @@ public class SystemController implements ControllerInterface {
 
     // create a checkout book as a librarian
     @Override
-    public void checkoutBook(String isbn, String memberID) throws LibrarySystemException {
+    public int checkoutBook(String isbn, String memberID) throws LibrarySystemException {
         // get book object by id
         Book targetBook = getBookById(isbn);
         if (targetBook == null) {
@@ -177,6 +181,7 @@ public class SystemController implements ControllerInterface {
         updateLibraryMember(memberID, libraryMember);
         updateBook(isbn, targetBook);
         System.out.println(String.format("after checkout ===> copies: %s", targetBook.getNumAvailable()));
+        return availableBookCopy.getCopyNum();
 
     }
 

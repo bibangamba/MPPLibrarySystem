@@ -22,7 +22,7 @@ public interface ControllerInterface {
 	LibraryMember getMemberById(String id);
 
 	// create a checkout book as a librarian
-	void checkoutBook(String isbn, String memberID) throws LibrarySystemException;
+	int checkoutBook(String isbn, String memberID) throws LibrarySystemException;
 
 	void updateLibraryMember(String memberId, LibraryMember libraryMember);
 
