@@ -71,6 +71,7 @@ public class SystemController implements ControllerInterface {
 
     @Override
     public List<String> allBookIds() {
+    	System.out.println("fetch all books");
         DataAccess da = new DataAccessFacade();
         List<String> retval = new ArrayList<>();
         for (Map.Entry<String, Book> book : da.readBooksMap().entrySet()){
@@ -141,9 +142,9 @@ public class SystemController implements ControllerInterface {
 		if(libraryMember == null) {
 			throw new LibrarySystemException("library Member does not exist");
 		}
+		
 		// if member has a CheckoutRecord if yes then add RecordEntity to it,
 		// if not create new CheckoutRecord and linked to member and RecordEntity
-		
 		if(libraryMember.getCheckoutRecord() == null){
 			System.out.println("libraryMember has no checkoutRecord");
 			System.out.println(newRecordEntry.toString());
@@ -158,6 +159,7 @@ public class SystemController implements ControllerInterface {
 		
 		//update
 		updateLibraryMember(MemberID, libraryMember);
+		updateBook(BookID, targetBook);
 		System.out.println(String.format("after checkout ===> copies: %s", targetBook.getNumAvailable()));
 		
 	}
@@ -165,6 +167,11 @@ public class SystemController implements ControllerInterface {
 	public void updateLibraryMember(String memberId, LibraryMember libraryMember) {
 		DataAccess da = new DataAccessFacade();
 		da.updateMember(memberId, libraryMember);
+	}
+	
+	public void updateBook(String bookId, Book book) {
+		DataAccess da = new DataAccessFacade();
+		da.updateBook(bookId, book);
 	}
 	
 }

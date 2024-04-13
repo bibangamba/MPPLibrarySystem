@@ -19,6 +19,7 @@ public interface DataAccess {
 	public HashMap<String,Author> readAuthorMap();
 	public void saveNewMember(LibraryMember member);
 	public void updateMember(String memberId, LibraryMember member); 
+	public void updateBook(String bookId, Book book); 
 	public void saveNewAuthor(Author author);
 
 	List<Author> getAuthorsFromIds(List<String> authorIds) throws BookException;
