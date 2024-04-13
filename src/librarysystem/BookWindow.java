@@ -11,7 +11,7 @@ import java.util.List;
 
 public class BookWindow extends JFrame implements LibWindow {
     public static final BookWindow INSTANCE = new BookWindow();
-    public static final String ISBN_FORMAT = "\\d{2}-\\d{6}";
+    public static final String ISBN_FORMAT = "\\d{2}-\\d{5}";
 
     private boolean isInitialized = false;
 
@@ -170,7 +170,7 @@ public class BookWindow extends JFrame implements LibWindow {
 
                 if (isbn.isEmpty() || title.isEmpty()) throw new BookException("Fields should not be empty!");
                 if (!isbn.matches(ISBN_FORMAT)) {
-                    throw new BookException("Invalid ISBN format. Should be similar to: 12-345678");
+                    throw new BookException("Invalid ISBN format. Should be similar to: 12-12345");
                 }
                 if (copies < 1) throw new BookException("Number of copies must be greater than 1");
 

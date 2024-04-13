@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,8 +15,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
     public final static LibrarySystem INSTANCE = new LibrarySystem();
     private static LibWindow[] allWindows = {
             LibrarySystem.INSTANCE, LoginWindow.INSTANCE,
-            AllMemberIdsWindow.INSTANCE, AllBookIdsWindow.INSTANCE, AddMember.INSTANCE,
-            AddAuthorWindow.INSTANCE, AllAuthorsWindow.INSTANCE, BookWindow.INSTANCE, CheckoutBookWindow.INSTANCE
+            AddMember.INSTANCE, AllMemberIdsWindow.INSTANCE,
+            AddAuthorWindow.INSTANCE, AllAuthorsWindow.INSTANCE,
+            BookWindow.INSTANCE, AllBookIdsWindow.INSTANCE,
+            CheckoutBookWindow.INSTANCE, AddBookCopyWindow.INSTANCE
     };
     ControllerInterface ci = new SystemController();
     JPanel mainPanel;
@@ -54,7 +57,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
     private void setPathToImage() {
         String currDirectory = System.getProperty("user.dir");
         System.out.println(currDirectory);
-        pathToImage = currDirectory + "\\src\\librarysystem\\library.jpg";
+        pathToImage = currDirectory + String.format("%ssrc%slibrarysystem%slibrary.jpg",
+                File.pathSeparator, File.pathSeparator, File.pathSeparator);
     }
 
     private void insertSplashImage() {
@@ -150,7 +154,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
 
         JMenuItem addBookCopy = new JMenuItem("Add Book Copy");
         addBookCopy.addActionListener(e -> {
-            // todo: add book copy window
+            LibrarySystem.hideAllWindows();
+            AddBookCopyWindow.INSTANCE.init();
+            Util.centerFrameOnDesktop(BookWindow.INSTANCE);
+            AddBookCopyWindow.INSTANCE.setVisible(true);
         });
         options.add(addBookCopy);
 
@@ -167,28 +174,23 @@ public class LibrarySystem extends JFrame implements LibWindow {
     private void librarianMenuItems() {
         JMenuItem checkoutBook = new JMenuItem("Checkout Book");
         checkoutBook.addActionListener(e -> {
-            // todo: checkout book window
-        	LibrarySystem.hideAllWindows();
-        	CheckoutBookWindow.INSTANCE.init();
-        	CheckoutBookWindow.INSTANCE.setVisible(true);
+            LibrarySystem.hideAllWindows();
+            CheckoutBookWindow.INSTANCE.init();
+            CheckoutBookWindow.INSTANCE.setVisible(true);
         });
         options.add(checkoutBook);
 
-        JMenuItem checkoutRecord = new JMenuItem("Checkout Record");
-        checkoutRecord.addActionListener(e -> {
-            // todo: checkout book window
-        });
+//        JMenuItem checkoutRecord = new JMenuItem("Checkout Record");
+//        checkoutRecord.addActionListener(e -> {
+//            // todo: checkout book window
+//        });
         // not required for demo
 //        options.add(checkoutRecord);
 
-        JMenuItem checkoutOverDue = new JMenuItem("Checkout Overdue");
-        checkoutOverDue.addActionListener(e -> {
-            // todo: checkout book window
-//        	add author
-            LibrarySystem.hideAllWindows();
-            AddAuthorWindow.INSTANCE.init();
-            AddAuthorWindow.INSTANCE.setVisible(true);
-        });
+//        JMenuItem checkoutOverDue = new JMenuItem("Checkout Overdue");
+//        checkoutOverDue.addActionListener(e -> {
+//            // todo: checkout book window
+//        });
         // not required for demo
 //        options.add(checkoutOverDue);
     }

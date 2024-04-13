@@ -1,6 +1,5 @@
 package librarysystem;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,9 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import javax.swing.JButton;
-import javax.swing.JTextPane;
 
 import business.LibrarySystemException;
 import business.SystemController;
@@ -106,7 +103,7 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
 					String bookID = BookID.getText();
 					SystemController cont = new SystemController();
 					try {
-						cont.CreateCheckoutBook(bookID, memberID);
+						cont.checkoutBook(bookID, memberID);
 
 						JOptionPane.showMessageDialog(saveButton, "Book with id = " + bookID + "has been checked out to member with id = " + memberID ,
 								"checkout created successfully", JOptionPane.INFORMATION_MESSAGE);

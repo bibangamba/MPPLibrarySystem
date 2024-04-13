@@ -9,4 +9,22 @@ public interface ControllerInterface {
 	public List<String> allBookIds();
 	public List<String> getAllAuthors();
 
+	public int addBookCopy(String isbn, int copies) throws BookException;
+
+	// add member
+	void addMember(String memberId, String fname, String lname, String tel, String street, String city, String state, String zip) throws LibrarySystemException;
+
+	// add author
+	void addAuthor(String fname, String lname, String tel, String street, String city, String state, String zip, String bio) throws LibrarySystemException;
+
+	Book getBookById(String id);
+
+	LibraryMember getMemberById(String id);
+
+	// create a checkout book as a librarian
+	void checkoutBook(String isbn, String memberID) throws LibrarySystemException;
+
+	void updateLibraryMember(String memberId, LibraryMember libraryMember);
+
+	void updateBook(String bookId, Book book);
 }

@@ -32,6 +32,7 @@ public class LoginWindow extends JFrame implements LibWindow {
      * @wbp.parser.entryPoint
      */
     public void init() {
+        System.out.println("### Login init called again!");
         getContentPane().setLayout(null);
 
         JPanel panel = new JPanel();
