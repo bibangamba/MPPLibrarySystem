@@ -139,6 +139,16 @@ public class SystemController implements ControllerInterface {
         DataAccess da = new DataAccessFacade();
         return da.readMemberMap().get(id);
     }
+    
+    public HashMap<String, LibraryMember> getAllMembers() {
+        DataAccess da = new DataAccessFacade();
+        List<String> retval = new ArrayList<>();
+        for (Map.Entry<String, LibraryMember> member : da.readMemberMap().entrySet()) {
+            retval.add(String.format("%s (mem id) - %s", member.getKey(), member.getValue().getName()));
+        }
+        
+        return da.readMemberMap();
+    }
 
     // create a checkout book as a librarian
     @Override
@@ -196,5 +206,42 @@ public class SystemController implements ControllerInterface {
         DataAccess da = new DataAccessFacade();
         da.updateBook(bookId, book);
     }
+    
+
+	public Object[][] getCheckoutData() {
+	    DataAccess da = new DataAccessFacade();
+	    HashMap<String, LibraryMember> allMembers = da.readMemberMap();
+	
+	    // Calculate total number of checkout entries
+	    int totalEntries = 0;
+	    for (LibraryMember member : allMembers.values()) {
+	    	if(member.getCheckoutRecord() != null) {
+	    		totalEntries += member.getCheckoutRecord().getAllCheckoutEntry().size();
+	    	}
+	        
+	    }
+	
+	    Object[][] data = new Object[totalEntries+allMembers.size()][5];
+	
+	    int index = 0;
+	    for (Map.Entry<String, LibraryMember> memberEntry : allMembers.entrySet()) {
+	        LibraryMember member = memberEntry.getValue();
+	        if(member.getCheckoutRecord() != null) {
+		        for (CheckoutEntry checkoutEntry : member.getCheckoutRecord().getAllCheckoutEntry()) {
+		            Object[] row = new Object[5];
+		            row[0] = member.getName();
+		            row[1] = checkoutEntry.getBookCopy().getBook().getTitle();
+		            row[2] = checkoutEntry.getBookCopy().getCopyNum();
+		            row[3] = checkoutEntry.getCheckoutDate().toString();
+		            row[4] = checkoutEntry.getDueDate().toString();
+		
+		            data[index] = row;
+		            index++;
+		        }
+	        }
+	    }
+	
+	    return data;
+	}
 
 }

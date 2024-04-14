@@ -6,6 +6,7 @@ import business.SystemController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class CheckoutBookWindow extends JFrame implements LibWindow {
     public static final CheckoutBookWindow INSTANCE = new CheckoutBookWindow();
@@ -14,7 +15,15 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
     private JFrame frame;
     private JTextField LibraryMemberId;
     private JTextField BookID;
-
+    private JTable table;
+    private String[] columnNames = {
+		"member Name",
+		"book Name",
+		"copy Number",
+        "checkout Date",
+        "checkout Due"
+        };
+    Object[][] data;
     /**
      * Create the application.
      */
@@ -67,10 +76,10 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
         panel.add(BookID);
         isInitialized(true);
 //        setVisible(true);
-        setSize(420, 300);
+        setSize(551, 372);
 
 //        JButton saveButton = new JButton("Save");
-        saveButton.setBounds(6, 149, 117, 29);
+        saveButton.setBounds(189, 151, 117, 29);
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (validateForm()) {
@@ -85,6 +94,7 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
                                 "checkout created successfully", JOptionPane.INFORMATION_MESSAGE);
                         LibraryMemberId.setText("");
                         BookID.setText("");
+                        data = cont.getCheckoutData();
                     } catch (LibrarySystemException e1) {
                         // TODO Auto-generated catch block
 //                        e1.printStackTrace();
@@ -103,8 +113,26 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
             LibrarySystem.hideAllWindows();
             LibrarySystem.INSTANCE.setVisible(true);
         });
-        backBtn.setBounds(6, 231, 87, 29);
+        backBtn.setBounds(-3, 151, 87, 29);
         panel.add(backBtn);
+        
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(0, 212, 545, 126);
+        panel.add(scrollPane);
+        
+        
+//        String[] columnNames = {
+//        		"member Name",
+//        		"book Name",
+//        		"copy Number",
+//                "checkout Date",
+//                "checkout Due",
+//                };
+        
+        SystemController cont = new SystemController();
+        data = cont.getCheckoutData();
+        table = new JTable(data, columnNames);
+        scrollPane.setViewportView(table);
 
     }
 
@@ -128,6 +156,4 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
         return true;
 
     }
-
-
 }
