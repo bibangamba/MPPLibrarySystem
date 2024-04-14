@@ -169,17 +169,13 @@ public class SystemController implements ControllerInterface {
 
         // if member has a CheckoutRecord if yes then add RecordEntity to it,
         // if not create new CheckoutRecord and linked to member and RecordEntity
-        if (libraryMember.getCheckoutRecord() == null) {
-            System.out.println("LibraryMember has no checkoutRecord");
-            System.out.println(newRecordEntry.toString());
-            CheckoutRecord newCheckoutRecord = new CheckoutRecord();
-            newCheckoutRecord.addCheckoutEntry(newRecordEntry);
-            libraryMember.setCheckoutRecord(newCheckoutRecord);
-        } else {
-            System.out.println("libraryMember has checkoutRecord");
-            CheckoutRecord libraryMemberCheckoutRecord = libraryMember.getCheckoutRecord();
-            libraryMemberCheckoutRecord.addCheckoutEntry(newRecordEntry);
+        CheckoutRecord checkoutRecord = libraryMember.getCheckoutRecord();;
+        if (checkoutRecord == null) {
+            checkoutRecord = new CheckoutRecord();
         }
+
+        checkoutRecord.addCheckoutEntry(newRecordEntry);
+        libraryMember.setCheckoutRecord(checkoutRecord);
 
         //update
         updateLibraryMember(memberID, libraryMember);
