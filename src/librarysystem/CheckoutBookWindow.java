@@ -6,7 +6,9 @@ import business.SystemController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class CheckoutBookWindow extends JFrame implements LibWindow {
     public static final CheckoutBookWindow INSTANCE = new CheckoutBookWindow();
@@ -24,6 +26,7 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
         "checkout Due"
         };
     Object[][] data;
+    private DefaultTableModel tableModel;
     /**
      * Create the application.
      */
@@ -95,6 +98,9 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
                         LibraryMemberId.setText("");
                         BookID.setText("");
                         data = cont.getCheckoutData();
+                        tableModel.setRowCount(0);
+                        cont.tableModelSetRow(tableModel, data);
+                        tableModel.fireTableDataChanged();
                     } catch (LibrarySystemException e1) {
                         // TODO Auto-generated catch block
 //                        e1.printStackTrace();
@@ -120,18 +126,15 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
         scrollPane.setBounds(0, 212, 545, 126);
         panel.add(scrollPane);
         
-        
-//        String[] columnNames = {
-//        		"member Name",
-//        		"book Name",
-//        		"copy Number",
-//                "checkout Date",
-//                "checkout Due",
-//                };
-        
+
         SystemController cont = new SystemController();
         data = cont.getCheckoutData();
-        table = new JTable(data, columnNames);
+        System.out.println(data.length);
+        tableModel = new DefaultTableModel();
+        tableModel.setColumnIdentifiers(columnNames);
+        cont.tableModelSetRow(tableModel, data);
+        table = new JTable(tableModel);
+        
         scrollPane.setViewportView(table);
 
     }
@@ -157,3 +160,6 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
 
     }
 }
+
+
+

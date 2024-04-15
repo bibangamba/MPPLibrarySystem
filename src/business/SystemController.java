@@ -7,9 +7,12 @@ import dataaccess.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.table.DefaultTableModel;
 
 public class SystemController implements ControllerInterface {
     private static Auth currentAuth = null;
@@ -221,7 +224,7 @@ public class SystemController implements ControllerInterface {
 	        
 	    }
 	
-	    Object[][] data = new Object[totalEntries+allMembers.size()][5];
+	    Object[][] data = new Object[totalEntries][5];
 	
 	    int index = 0;
 	    for (Map.Entry<String, LibraryMember> memberEntry : allMembers.entrySet()) {
@@ -240,8 +243,13 @@ public class SystemController implements ControllerInterface {
 		        }
 	        }
 	    }
-	
+	   
 	    return data;
 	}
-
+	
+	public void tableModelSetRow(DefaultTableModel tableModel, Object[][] data) {
+        for(Object[] row : data) {
+        	tableModel.addRow(row);        	
+        }
+	}
 }
