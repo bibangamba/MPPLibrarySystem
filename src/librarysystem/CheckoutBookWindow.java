@@ -136,6 +136,10 @@ public class CheckoutBookWindow extends JFrame implements LibWindow {
         table = new JTable(tableModel);
         
         scrollPane.setViewportView(table);
+        
+        JLabel lblNewLabel = new JLabel("Checkout Book");
+        lblNewLabel.setBounds(227, 17, 105, 16);
+        panel.add(lblNewLabel);
 
     }
 
